@@ -1,11 +1,18 @@
 <%- include('../partials/head') %>
 <%- include('../partials/header') %>
 <h1>Edit Email</h1>
-<% console.log(user, 'for EDIT') %>
 <form action="/users/profile/edit?_method=PUT" method="POST">
-    <label>
+    <label for="name">
+        Name
+        <input type="name" name="name" id="name" value="<%= user.name %>" autofocus required>
+    </label>
+    <label for="email">
         Email
-        <input type="email" name="email" value="<%= user.email %>" required>
+        <input type="email" name="email" id="email" value="<%= user.email %>" required>
+    </label>
+    <label for="password">
+        Password
+        <input type="password" name="password" id="password" value="<%= user.password %>" required>
     </label>
     <button class="button" type="submit">Save</button>
 </form>

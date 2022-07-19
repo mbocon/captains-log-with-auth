@@ -4,6 +4,15 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
+// router middleware
+const auth = (req, res, next) => {
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect('/users/login');
+    }
+}
+
 // login GET route - renders login page
 usersRouter.get('/login', (req, res) => {
     res.render('./users/login.ejs', { err: '' });
@@ -40,7 +49,6 @@ usersRouter.post('/signup', (req, res) => {
     req.body.password = hash;
     User.create(req.body, (error, user) => {
         if (error) {
-            console.log(error)
             res.render('./users/signup.ejs', { err: 'Email already taken' });
         } else {
             req.session.user = user._id; // this is a login
@@ -57,21 +65,23 @@ usersRouter.get('/logout', (req, res) => {
 });
 
 // profile GET route
-usersRouter.get('/profile', (req, res) => {
+usersRouter.get('/profile', auth, (req, res) => {
     User.findById(req.session.user, (err, user) => {
         res.render('./users/profile.ejs', { user });
     });
 });
 
 // profile EDIT route - renders the edit form
-usersRouter.get('/profile/edit', (req, res) => {
+usersRouter.get('/profile/edit', auth, (req, res) => {
     User.findById(req.session.user, (err, user) => {
         res.render('./users/edit.ejs', { user });
     });
 });
 
 // profile UPDATE route - updates the user in the database
-usersRouter.put('/profile/edit', (req, res) => {
+usersRouter.put('/profile/edit', auth, (req, res) => {
+    const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
+    req.body.password = hash;
     User.findByIdAndUpdate(req.session.user, req.body, { new: true }, (err, user) => {
         res.redirect('/users/profile');
     });

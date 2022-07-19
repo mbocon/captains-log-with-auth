@@ -29,7 +29,6 @@ logRouter.get('/', (req, res) => {
 // filtered index route - list all logs by user
 logRouter.get('/filtered', (req, res) => {
     User.findById(req.session.user, (error, user) => {
-        console.log(user.name, 'is  user name');
         Log.find({ user: req.session.user }, (error, logs) => {
             res.render('./logs/index.ejs', { logs, name: `${user.name}` })
         });
@@ -65,7 +64,6 @@ logRouter.put("/:id", (req, res) => {
 logRouter.post("/", (req, res) => {
     req.body.shipIsBroken = !!req.body.shipIsBroken;
     req.body.user = req.session.user;
-    console.log('POST /logs', req.body);
     Log.create(req.body, (err, createdlog) => {
         res.redirect("/logs");
     });
