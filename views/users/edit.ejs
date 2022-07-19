@@ -1,6 +1,9 @@
 <%- include('../partials/head') %>
 <%- include('../partials/header') %>
-<h1>Edit Email</h1>
+<h1>Edit Account</h1>
+<% if(err) { %>
+<p style="color: red;  margin: 1rem"><%= err %></p>
+<% } %>
 <form action="/users/profile/edit?_method=PUT" method="POST">
     <label for="name">
         Name
@@ -12,7 +15,7 @@
     </label>
     <label for="password">
         Password
-        <input type="password" name="password" id="password" value="<%= user.password %>" required>
+        <input type="password" name="password" id="password">
     </label>
     <button class="button" type="submit">Save</button>
 </form>

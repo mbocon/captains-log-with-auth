@@ -74,17 +74,23 @@ usersRouter.get('/profile', auth, (req, res) => {
 // profile EDIT route - renders the edit form
 usersRouter.get('/profile/edit', auth, (req, res) => {
     User.findById(req.session.user, (err, user) => {
-        res.render('./users/edit.ejs', { user });
+        res.render('./users/edit.ejs', { user, err: '' });
     });
 });
 
 // profile UPDATE route - updates the user in the database
 usersRouter.put('/profile/edit', auth, (req, res) => {
-    const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
-    req.body.password = hash;
-    User.findByIdAndUpdate(req.session.user, req.body, { new: true }, (err, user) => {
-        res.redirect('/users/profile');
-    });
+    console.log(req.body.password, req.body.password.length, 'IS PASSWORD LENGTH');
+    if(req.body.password.length < 8) {
+        return res.render('./users/edit.ejs', { err: 'Password must be at least 8 characters long' });
+    }
+    if(req.body.password && req.body.password.length >= 8) {
+        const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
+        req.body.password = hash;
+        User.findByIdAndUpdate(req.session.user, req.body, { new: true }, (err, user) => {
+            res.redirect('/users/profile');
+        });
+    }
 });
 
 module.exports = usersRouter;
