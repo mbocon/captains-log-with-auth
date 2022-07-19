@@ -1,0 +1,21 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<h1>Add new log</h1>
+<a class="button" href="/logs/">Go back</a>
+<form action="/logs" method="POST">
+    <label for="title">
+        Title
+        <input id="title" type="text" name="title" autofocus required>
+    </label>
+    <label for="entry">
+        Entry
+        <textarea id="entry" name="entry" cols="30" rows="10" required></textarea>
+    </label>
+    <label for="shipIsBroken">
+        Ship is broken?
+        <input id="shipIsBroken" type="checkbox" name="shipIsBroken" >
+    </label>
+    <button class="button" type="submit">Add</button>
+</form>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,23 @@
+</main>
+<footer>
+    <p>Copyright &copy; All Rights Reserved</p>
+    <p><%= new Date().getFullYear() %> Captains Log</p>
+</footer>
+<script>
+    const moveCursorToEnd = (input, entry) => {
+        if (input) {
+            input.setSelectionRange(input.value.length, input.value.length);
+        }
+        if (entry) {
+            entry.setSelectionRange(entry.value.length, entry.value.length);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('title');
+        const entry = document.getElementById('entry');
+        moveCursorToEnd(input, entry);
+    });
+</script>
+</body>
+</html>

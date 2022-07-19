@@ -1,0 +1,25 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<% if (name) { %>
+<h1><span style="text-transform: capitalize;"><%= user.name %></span>'s logs</h1>
+<% } else { %>
+<h1>Logs index page</h1>
+<% } %>
+<a class="button" style="margin: 1rem" href="/logs/new">Add log</a>
+<div class="logs-parent">
+    <% if (logs.length) { %>
+    <% logs.forEach(function(log) { %>
+    <div class="log">
+        <p><span>Title:</span> <%= log.title %></p>
+        <a class="button" href="/logs/<%= log._id %>">View</a>
+        <a class="button" href="/logs/<%= log._id %>/edit">Edit</a>
+        <form class="delete-form" action="/logs/<%= log._id %>?_method=DELETE" method="POST">
+            <input type="submit" value="Delete" class="button">
+        </form>
+    </div>
+    <% }); %>
+    <% } else { %>
+    <p>No logs found.</p>
+    <% } %>
+</div>
+<%- include('../partials/footer') %>

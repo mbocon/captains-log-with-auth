@@ -1,0 +1,21 @@
+<% console.log(`################################
+ USER: ${user} 
+ ################################`) %>
+<header>
+    <h1>
+        <a href="/logs">
+            Captains Log
+        </a>
+    </h1>
+
+    <nav>
+        <% if(user) { %>
+        <a href="/users/logout">Logout</a>
+        <a href="/users/profile">Profile</a>
+        <% } else { %>
+        <a href="/users/signup">Signup</a>
+        <a href="/users/login">Login</a>
+        <% } %>
+    </nav>
+</header>
+<main>

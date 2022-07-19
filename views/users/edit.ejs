@@ -1,0 +1,13 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<h1>Edit Email</h1>
+<% console.log(user, 'for EDIT') %>
+<form action="/users/profile/edit?_method=PUT" method="POST">
+    <label>
+        Email
+        <input type="email" name="email" value="<%= user.email %>" required>
+    </label>
+    <button class="button" type="submit">Save</button>
+</form>
+<a class="button" href="/users/profile">Go back</a>
+<%- include('../partials/footer') %>
