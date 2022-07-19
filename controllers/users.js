@@ -42,7 +42,7 @@ usersRouter.get('/signup', (req, res) => {
 
 // signup POST route - create a new user
 usersRouter.post('/signup', (req, res) => {
-    if(req.body.password.length < 8) {
+    if (req.body.password.length < 8) {
         return res.render('./users/signup.ejs', { err: 'Password must be at least 8 characters long' });
     }
     const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
@@ -81,16 +81,15 @@ usersRouter.get('/profile/edit', auth, (req, res) => {
 // profile UPDATE route - updates the user in the database
 usersRouter.put('/profile/edit', auth, (req, res) => {
     console.log(req.body.password, req.body.password.length, 'IS PASSWORD LENGTH');
-    if(req.body.password.length < 8) {
+    if (req.body.password.length < 8) {
         return res.render('./users/edit.ejs', { err: 'Password must be at least 8 characters long' });
     }
-    if(req.body.password && req.body.password.length >= 8) {
-        const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
-        req.body.password = hash;
-        User.findByIdAndUpdate(req.session.user, req.body, { new: true }, (err, user) => {
-            res.redirect('/users/profile');
-        });
-    }
+    const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_ROUNDS));
+    req.body.password = hash;
+    User.findByIdAndUpdate(req.session.user, req.body, { new: true }, (err, user) => {
+        res.redirect('/users/profile');
+    });
+
 });
 
 module.exports = usersRouter;
