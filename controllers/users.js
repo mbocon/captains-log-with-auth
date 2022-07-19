@@ -80,7 +80,6 @@ usersRouter.get('/profile/edit', auth, (req, res) => {
 
 // profile UPDATE route - updates the user in the database
 usersRouter.put('/profile/edit', auth, (req, res) => {
-    console.log(req.body.password, req.body.password.length, 'IS PASSWORD LENGTH');
     if (req.body.password.length < 8) {
         return res.render('./users/edit.ejs', { err: 'Password must be at least 8 characters long' });
     }
