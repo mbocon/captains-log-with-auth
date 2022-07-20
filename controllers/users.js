@@ -1,5 +1,6 @@
 const usersRouter = require('express').Router();
 const User = require('../models/user');
+const Log = require('../models/log');
 
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
@@ -88,7 +89,17 @@ usersRouter.put('/profile/edit', auth, (req, res) => {
     User.findByIdAndUpdate(req.session.user, req.body, { new: true }, (err, user) => {
         res.redirect('/users/profile');
     });
+});
 
+// profile DELETE route - deletes the user from the database
+usersRouter.delete('/profile', auth, (req, res) => {
+    User.findByIdAndDelete(req.session.user, (err, user) => {
+        Log.deleteMany({ user: req.session.user }, (err, logs) => {
+            req.session.destroy(() => {
+                res.redirect('/users/signup');
+            });
+        });
+    });
 });
 
 module.exports = usersRouter;

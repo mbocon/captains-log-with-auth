@@ -17,7 +17,19 @@
         Password
         <input type="password" name="password" id="password">
     </label>
-    <button class="button" type="submit">Save</button>
+    <label for="submit">
+        <input class="button" type="submit" id="submit" value="Save">
+    </label>
+</form>
+<form action="/users/profile?_method=DELETE" method="POST">
+    <p style="color: red; text-align: center; margin-bottom: 1rem;">CAUTION! CANNOT BE UNDONE!</p>
+    <label for="confirm">
+        Are you sure? Check box to confirm.
+        <input type="checkbox" name="confirm" id="confirm" required>
+    </label>
+    <label for="delete-profile">
+        <input style="width: fit-content;" class="button" type="submit" id="delete-profile" value="Delete Profile">
+    </label>
 </form>
 <a class="button" href="/users/profile">Go back</a>
 <%- include('../partials/footer') %>
