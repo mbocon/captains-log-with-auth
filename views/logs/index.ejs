@@ -12,10 +12,14 @@
     <div class="log">
         <p><span>Title:</span> <%= log.title %></p>
         <a class="button" href="/logs/<%= log._id %>">View</a>
-        <a class="button" href="/logs/<%= log._id %>/edit">Edit</a>
+        <% if (user === log.user.toString()) { %>
+        <a class="button" href="/logs/<%= log._id %>/edit %>">Edit</a>
         <form class="delete-form" action="/logs/<%= log._id %>?_method=DELETE" method="POST">
             <input type="submit" value="Delete" class="button">
         </form>
+        <% } else { %>
+        <p style="color: red">You can't edit or delete this log</p>
+        <%  } %>
     </div>
     <% }); %>
     <% } else { %>

@@ -22,7 +22,7 @@ logRouter.use(function (req, res, next) {
 // index route - list all logs
 logRouter.get('/', (req, res) => {
     Log.find({}, (error, logs) => {
-        res.render('./logs/index.ejs', { logs, name: '' })
+        res.render('./logs/index.ejs', { logs, name: '', user: req.session.user });
     });
 });
 
@@ -81,7 +81,7 @@ logRouter.get("/:id/edit", (req, res) => {
 // show route
 logRouter.get("/:id", (req, res) => {
     Log.findById(req.params.id, (error, foundLog) => {
-        res.render("./logs/show.ejs", { foundLog });
+        res.render("./logs/show.ejs", { foundLog, user: req.session.user });
     });
 });
 

@@ -1,20 +1,22 @@
 <%- include('../partials/head') %>
 <%- include('../partials/header') %>
 <h1>Show page</h1>
-<a class="button" style="margin: 1rem;" href="/logs/filtered">My logs</a>
-<a class="button"  href="/logs">All logs</a>
+<a class="button" href="/logs/filtered">My logs</a>
+<a class="button" style="margin: 1rem;" href="/logs">All logs</a>
 <div class="logs-parent">
     <div class="log show-log">
         <p><span>Title:</span><%= foundLog.title %></p>
         <p><%= foundLog.entry %></p>
         <p>Ship is broken? <%= foundLog.shipIsBroken %></p>
+        <% if (user === foundLog.user.toString()) { %>
         <a class="button" href="/logs/<%= foundLog._id %>/edit">Edit</a>
         <form class="delete-form" action="/logs/<%= foundLog._id %>?_method=DELETE" method="POST">
             <input type="submit" value="Delete" class="button">
         </form>
+        <% } else { %>
+        <p style="color: red">You can't edit or delete this log</p>
+        <%  } %>
     </div>
-
-    
 </div>
 
 <%- include('../partials/footer') %>
